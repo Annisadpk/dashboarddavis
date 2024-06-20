@@ -572,8 +572,8 @@ elif option == 'Operational Performance Overview':
     pengeluaran_operasional_department()
     pengalaman_kerja_gaji()
     harga_biaya()
-    Karyawan_department()
+    karyawan_department()
     operational_cost()
-    Monthly_expenses()
+    monthly_expenses()
     
 
