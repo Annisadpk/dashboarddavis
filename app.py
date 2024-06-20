@@ -255,7 +255,7 @@ option = st.sidebar.selectbox('Menu', [
     'Operational Performance Overview'
 ])
 
-if option == 'Top 10 Produk Terlaris':
+if option == 'Sales Performance Overview':
     plot_top_10_products()
     plot_sales_by_category()
     plot_revenue_per_year()
