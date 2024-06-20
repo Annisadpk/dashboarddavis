@@ -18,6 +18,10 @@ db_name = 'aw'
 
 encoded_password = quote_plus(db_password)
 
+# Membuat URL koneksi menggunakan SQLAlchemy
+connection_string = f'mysql+mysqlconnector://{db_username}:{encoded_password}@{db_host}/{db_name}'
+engine = create_engine(connection_string)
+
 # Fungsi untuk menjalankan query dan mengembalikan dataframe
 def run_query(query):
     return pd.read_sql(query, db_connection)
