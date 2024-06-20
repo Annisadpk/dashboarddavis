@@ -416,4 +416,3 @@ elif option == 'Customer Analysis':
     plot_customer_distribution_country()
     plot_age_distribution()
     plot_income_vs_sales()
-elif option == 'Operational Performance Overview':
