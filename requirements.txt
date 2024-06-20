@@ -4,3 +4,8 @@ pandas
 plotly
 altair
 SQLAlchemy
+seaborn
+matplotlib.pyplot 
+squarify
+mplcursors
+geopandas as gpd
