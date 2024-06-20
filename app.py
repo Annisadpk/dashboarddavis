@@ -10,9 +10,13 @@ import geopandas as gpd
 # Mengatur tampilan matplotlib untuk Streamlit
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-# Koneksi ke database
-db_connection_str = 'mysql+mysqlconnector://root:@localhost/dump_dnw_aw'
-db_connection = create_engine(db_connection_str)
+# Konfigurasi koneksi untuk SQLAlchemy
+db_username = 'davis2024irwan'
+db_password = 'wh451n9m@ch1n3'
+db_host = 'kubela.id'
+db_name = 'aw'
+
+encoded_password = quote_plus(db_password)
 
 # Fungsi untuk menjalankan query dan mengembalikan dataframe
 def run_query(query):
