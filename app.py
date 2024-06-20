@@ -532,7 +532,6 @@ def monthly_expenses():
     monthly_expenses_pivot = monthly_expenses_data.pivot(index='FullDateAlternateKey', columns='DepartmentGroupName', values='TotalAmount')
     fig, ax = plt.subplots(figsize=(15, 10))
     monthly_expenses_pivot.plot(kind='bar', stacked=True, colormap='viridis', ax=ax)
-    ax.set_title('Monthly Expenses by Department')
     ax.set_xlabel('Date')
     ax.set_ylabel('Total Amount')
     ax.legend(title='Department')
