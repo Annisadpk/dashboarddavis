@@ -502,7 +502,7 @@ def operational_cost():
         ddg.DepartmentGroupName;
     """
     operational_costs_data = run_query(query_operational_costs)
-    labels = [f"{dept.replace(' ', '\n')}\n${amount:,.2f}" for dept, amount in zip(operational_costs_data['DepartmentGroupName'], operational_costs_data['TotalAmount'])]
+    labels = [f"{dept.replace(' ', ' ')}\n${amount:,.2f}" for dept, amount in zip(operational_costs_data['DepartmentGroupName'], operational_costs_data['TotalAmount'])]
     fig, ax = plt.subplots(figsize=(12, 8))
     squarify.plot(sizes=operational_costs_data['TotalAmount'], label=labels, alpha=.8, color=sns.color_palette('viridis', len(operational_costs_data)), text_kwargs={'fontsize': 7}, ax=ax)
     ax.set_title('Operational Costs by Department', fontsize=15)
