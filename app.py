@@ -248,34 +248,20 @@ def plot_histogram_price_distribution():
 # Streamlit Layout
 st.title('Analisis Penjualan')
 
-st.sidebar.title('Navigasi')
-option = st.sidebar.selectbox('Pilih Grafik', [
-    'Top 10 Produk Terlaris',
-    'Perbandingan Penjualan Produk Berdasarkan Kategori',
-    'Pendapatan Perusahaan Pertahun',
-    'Pendapatan Perusahaan Per Kategori Produk Tiap Tahun',
-    'Komposisi Jumlah Penjualan Unit Produk Tiap Kategori',
-    'TreeMap Komposisi Produk yang Terjual Berdasarkan Kategori Produk',
-    'Komposisi Penjualan Berdasarkan Wilayah Penjualan',
-    'Hubungan Antara Harga Produk dan Jumlah Terjual',
-    'Distribusi Harga Produk'
+st.sidebar.title('Adventure Works')
+option = st.sidebar.selectbox('Menu', [
+    'Sales Performance Overview',
+    'Customer Analysis',
+    'Operational Performance Overview'
 ])
 
 if option == 'Top 10 Produk Terlaris':
     plot_top_10_products()
-elif option == 'Perbandingan Penjualan Produk Berdasarkan Kategori':
     plot_sales_by_category()
-elif option == 'Pendapatan Perusahaan Pertahun':
     plot_revenue_per_year()
-elif option == 'Pendapatan Perusahaan Per Kategori Produk Tiap Tahun':
     plot_stacked_area_chart()
-elif option == 'Komposisi Jumlah Penjualan Unit Produk Tiap Kategori':
     plot_donut_chart()
-elif option == 'TreeMap Komposisi Produk yang Terjual Berdasarkan Kategori Produk':
     plot_treemap()
-elif option == 'Komposisi Penjualan Berdasarkan Wilayah Penjualan':
     plot_sales_per_region()
-elif option == 'Hubungan Antara Harga Produk dan Jumlah Terjual':
     plot_scatter_price_sales()
-elif option == 'Distribusi Harga Produk':
     plot_histogram_price_distribution()
