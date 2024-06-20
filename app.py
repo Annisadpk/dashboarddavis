@@ -389,154 +389,154 @@ def plot_income_vs_sales():
 
 # Pendapatan Perusahaan Berdasarkan Promosi
 def pendapatan_prusahaan_berdasarkan_promosi():
-st.header('Pendapatan Perusahaan Berdasarkan Promosi')
-query_promotion_sales = """
-SELECT p.EnglishPromotionName, SUM(s.SalesAmount) AS TotalSales
-FROM factinternetsales s
-JOIN dimpromotion p ON s.PromotionKey = p.PromotionKey
-GROUP BY p.EnglishPromotionName
-"""
-promotion_sales_data = run_query(query_promotion_sales)
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(promotion_sales_data['EnglishPromotionName'], promotion_sales_data['TotalSales'], color='skyblue')
-ax.set_title('Pendapatan Perusahaan Berdasarkan Promosi')
-ax.set_xlabel('Promosi')
-ax.set_ylabel('Total Pendapatan')
-plt.xticks(rotation=45, ha='right')
-st.pyplot(fig)
+    st.header('Pendapatan Perusahaan Berdasarkan Promosi')
+    query_promotion_sales = """
+    SELECT p.EnglishPromotionName, SUM(s.SalesAmount) AS TotalSales
+    FROM factinternetsales s
+    JOIN dimpromotion p ON s.PromotionKey = p.PromotionKey
+    GROUP BY p.EnglishPromotionName
+    """
+    promotion_sales_data = run_query(query_promotion_sales)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.bar(promotion_sales_data['EnglishPromotionName'], promotion_sales_data['TotalSales'], color='skyblue')
+    ax.set_title('Pendapatan Perusahaan Berdasarkan Promosi')
+    ax.set_xlabel('Promosi')
+    ax.set_ylabel('Total Pendapatan')
+    plt.xticks(rotation=45, ha='right')
+    st.pyplot(fig)
 
 # Tren Pengeluaran Operasional Departemen
 def pengeluaran_operasional_department():
-st.header('Tren Pengeluaran Operasional Departemen')
-query_expense_trend = """
-SELECT t.CalendarYear, d.DepartmentGroupName, SUM(f.Amount) AS TotalAmount
-FROM factfinance f
-JOIN dimtime t ON f.TimeKey = t.TimeKey
-JOIN dimdepartmentgroup d ON f.DepartmentGroupKey = d.DepartmentGroupKey
-GROUP BY t.CalendarYear, d.DepartmentGroupName
-"""
-expense_data = run_query(query_expense_trend)
-fig, ax = plt.subplots(figsize=(12, 8))
-for department, data in expense_data.groupby('DepartmentGroupName'):
-    ax.plot(data['CalendarYear'], data['TotalAmount'], label=department)
-ax.set_title('Tren Pengeluaran Operasional Departemen')
-ax.set_xlabel('Tahun')
-ax.set_ylabel('Total Pengeluaran')
-ax.legend()
-plt.xticks(rotation=45)
-st.pyplot(fig)
+    st.header('Tren Pengeluaran Operasional Departemen')
+    query_expense_trend = """
+    SELECT t.CalendarYear, d.DepartmentGroupName, SUM(f.Amount) AS TotalAmount
+    FROM factfinance f
+    JOIN dimtime t ON f.TimeKey = t.TimeKey
+    JOIN dimdepartmentgroup d ON f.DepartmentGroupKey = d.DepartmentGroupKey
+    GROUP BY t.CalendarYear, d.DepartmentGroupName
+    """
+    expense_data = run_query(query_expense_trend)
+    fig, ax = plt.subplots(figsize=(12, 8))
+    for department, data in expense_data.groupby('DepartmentGroupName'):
+        ax.plot(data['CalendarYear'], data['TotalAmount'], label=department)
+    ax.set_title('Tren Pengeluaran Operasional Departemen')
+    ax.set_xlabel('Tahun')
+    ax.set_ylabel('Total Pengeluaran')
+    ax.legend()
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
 
 # Korelasi Antara Pengalaman Kerja dan Gaji
 def pengalaman_kerja_gaji():
-st.header('Korelasi Antara Pengalaman Kerja dan Gaji')
-query_experience_salary = """
-SELECT 
-    DATEDIFF(COALESCE(e.EndDate, last_date), e.HireDate) / 365 AS ExperienceYears, 
-    e.BaseRate
-FROM 
-    dimemployee e
-LEFT JOIN 
-    (SELECT MAX(FullDateAlternateKey) AS last_date FROM dimtime) t ON e.EndDate IS NULL AND e.HireDate IS NOT NULL
-"""
-employee_data = run_query(query_experience_salary)
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.scatter(employee_data['ExperienceYears'], employee_data['BaseRate'], alpha=0.5)
-ax.set_title('Korelasi Antara Pengalaman Kerja (Tahun) dan Gaji')
-ax.set_xlabel('Pengalaman Kerja (Tahun)')
-ax.set_ylabel('Gaji')
-st.pyplot(fig)
+    st.header('Korelasi Antara Pengalaman Kerja dan Gaji')
+    query_experience_salary = """
+    SELECT 
+        DATEDIFF(COALESCE(e.EndDate, last_date), e.HireDate) / 365 AS ExperienceYears, 
+        e.BaseRate
+    FROM 
+        dimemployee e
+    LEFT JOIN 
+        (SELECT MAX(FullDateAlternateKey) AS last_date FROM dimtime) t ON e.EndDate IS NULL AND e.HireDate IS NOT NULL
+    """
+    employee_data = run_query(query_experience_salary)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.scatter(employee_data['ExperienceYears'], employee_data['BaseRate'], alpha=0.5)
+    ax.set_title('Korelasi Antara Pengalaman Kerja (Tahun) dan Gaji')
+    ax.set_xlabel('Pengalaman Kerja (Tahun)')
+    ax.set_ylabel('Gaji')
+    st.pyplot(fig)
 
 # Korelasi antara Harga Produk dan Biaya Produksi dengan Markup
 def harga_biaya():
-st.header('Korelasi antara Harga Produk dan Biaya Produksi dengan Markup')
-query_product_pricing = """
-SELECT ProductKey, StandardCost, ListPrice
-FROM dimproduct
-ORDER BY StandardCost ASC
-"""
-product_data = run_query(query_product_pricing)
-product_data['Markup'] = product_data['StandardCost'] * 1.2
-average_markup = product_data['Markup'].mean()
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.scatter(product_data['StandardCost'], product_data['StandardCost'], color='cornflowerblue', label='StandardCost')
-ax.scatter(product_data['StandardCost'], product_data['ListPrice'], color='royalblue', label='ListPrice')
-ax.plot(product_data['StandardCost'], product_data['Markup'], color='cadetblue', linestyle='-', label=f'Rata-rata Markup: {average_markup:.2f}')
-ax.set_title('Korelasi antara Harga Produk dan Biaya Produksi dengan Markup')
-ax.set_xlabel('StandardCost')
-ax.set_ylabel('Nominal (StandardCost / ListPrice)')
-ax.legend()
-st.pyplot(fig)
+    st.header('Korelasi antara Harga Produk dan Biaya Produksi dengan Markup')
+    query_product_pricing = """
+    SELECT ProductKey, StandardCost, ListPrice
+    FROM dimproduct
+    ORDER BY StandardCost ASC
+    """
+    product_data = run_query(query_product_pricing)
+    product_data['Markup'] = product_data['StandardCost'] * 1.2
+    average_markup = product_data['Markup'].mean()
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.scatter(product_data['StandardCost'], product_data['StandardCost'], color='cornflowerblue', label='StandardCost')
+    ax.scatter(product_data['StandardCost'], product_data['ListPrice'], color='royalblue', label='ListPrice')
+    ax.plot(product_data['StandardCost'], product_data['Markup'], color='cadetblue', linestyle='-', label=f'Rata-rata Markup: {average_markup:.2f}')
+    ax.set_title('Korelasi antara Harga Produk dan Biaya Produksi dengan Markup')
+    ax.set_xlabel('StandardCost')
+    ax.set_ylabel('Nominal (StandardCost / ListPrice)')
+    ax.legend()
+    st.pyplot(fig)
 
 # Distribusi Karyawan pada Departemen
-def Karyawan_department():
-st.header('Distribusi Karyawan pada Departemen')
-query_employee_distribution = """
-SELECT 
-    DepartmentName, 
-    COUNT(EmployeeKey) AS EmployeeCount
-FROM 
-    dimemployee
-GROUP BY 
-    DepartmentName;
-"""
-employee_distribution = run_query(query_employee_distribution)
-fig, ax = plt.subplots(figsize=(12, 8))
-sns.barplot(data=employee_distribution, x='EmployeeCount', y='DepartmentName', palette='viridis', ax=ax)
-ax.set_title('Distribusi Karyawan pada Departemen')
-ax.set_xlabel('Jumlah Karyawan')
-ax.set_ylabel('Nama Departemen')
-st.pyplot(fig)
+def karyawan_department():
+    st.header('Distribusi Karyawan pada Departemen')
+    query_employee_distribution = """
+    SELECT 
+        DepartmentName, 
+        COUNT(EmployeeKey) AS EmployeeCount
+    FROM 
+        dimemployee
+    GROUP BY 
+        DepartmentName;
+    """
+    employee_distribution = run_query(query_employee_distribution)
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(data=employee_distribution, x='EmployeeCount', y='DepartmentName', palette='viridis', ax=ax)
+    ax.set_title('Distribusi Karyawan pada Departemen')
+    ax.set_xlabel('Jumlah Karyawan')
+    ax.set_ylabel('Nama Departemen')
+    st.pyplot(fig)
 
 # Operational Costs by Department (TreeMap)
 def operational_cost():
-st.header('Operational Costs by Department (TreeMap)')
-query_operational_costs = """
-SELECT 
-    ddg.DepartmentGroupName, 
-    SUM(ff.Amount) AS TotalAmount
-FROM 
-    factfinance ff
-JOIN 
-    dimdepartmentgroup ddg ON ff.DepartmentGroupKey = ddg.DepartmentGroupKey
-GROUP BY 
-    ddg.DepartmentGroupName;
-"""
-operational_costs_data = run_query(query_operational_costs)
-labels = [f"{dept.replace(' ', '\n')}\n${amount:,.2f}" for dept, amount in zip(operational_costs_data['DepartmentGroupName'], operational_costs_data['TotalAmount'])]
-fig, ax = plt.subplots(figsize=(12, 8))
-squarify.plot(sizes=operational_costs_data['TotalAmount'], label=labels, alpha=.8, color=sns.color_palette('viridis', len(operational_costs_data)), text_kwargs={'fontsize': 7}, ax=ax)
-ax.set_title('Operational Costs by Department', fontsize=15)
-ax.axis('off')
-st.pyplot(fig)
+    st.header('Operational Costs by Department (TreeMap)')
+    query_operational_costs = """
+    SELECT 
+        ddg.DepartmentGroupName, 
+        SUM(ff.Amount) AS TotalAmount
+    FROM 
+        factfinance ff
+    JOIN 
+        dimdepartmentgroup ddg ON ff.DepartmentGroupKey = ddg.DepartmentGroupKey
+    GROUP BY 
+        ddg.DepartmentGroupName;
+    """
+    operational_costs_data = run_query(query_operational_costs)
+    labels = [f"{dept.replace(' ', '\n')}\n${amount:,.2f}" for dept, amount in zip(operational_costs_data['DepartmentGroupName'], operational_costs_data['TotalAmount'])]
+    fig, ax = plt.subplots(figsize=(12, 8))
+    squarify.plot(sizes=operational_costs_data['TotalAmount'], label=labels, alpha=.8, color=sns.color_palette('viridis', len(operational_costs_data)), text_kwargs={'fontsize': 7}, ax=ax)
+    ax.set_title('Operational Costs by Department', fontsize=15)
+    ax.axis('off')
+    st.pyplot(fig)
 
 # Monthly Expenses by Department
-def Monthly_expenses():
-st.header('Monthly Expenses by Department')
-query_monthly_expenses = """
-SELECT 
-    ddg.DepartmentGroupName,
-    dt.FullDateAlternateKey,
-    SUM(ff.Amount) AS TotalAmount
-FROM 
-    factfinance ff
-JOIN 
-    dimdepartmentgroup ddg ON ff.DepartmentGroupKey = ddg.DepartmentGroupKey
-JOIN 
-    dimtime dt ON ff.TimeKey = dt.TimeKey
-GROUP BY 
-    ddg.DepartmentGroupName, dt.FullDateAlternateKey
-ORDER BY 
-    dt.FullDateAlternateKey;
-"""
-monthly_expenses_data = run_query(query_monthly_expenses)
-monthly_expenses_pivot = monthly_expenses_data.pivot(index='FullDateAlternateKey', columns='DepartmentGroupName', values='TotalAmount')
-fig, ax = plt.subplots(figsize=(15, 10))
-monthly_expenses_pivot.plot(kind='bar', stacked=True, colormap='viridis', ax=ax)
-ax.set_title('Monthly Expenses by Department')
-ax.set_xlabel('Date')
-ax.set_ylabel('Total Amount')
-ax.legend(title='Department')
-st.pyplot(fig)
+def monthly_expenses():
+    st.header('Monthly Expenses by Department')
+    query_monthly_expenses = """
+    SELECT 
+        ddg.DepartmentGroupName,
+        dt.FullDateAlternateKey,
+        SUM(ff.Amount) AS TotalAmount
+    FROM 
+        factfinance ff
+    JOIN 
+        dimdepartmentgroup ddg ON ff.DepartmentGroupKey = ddg.DepartmentGroupKey
+    JOIN 
+        dimtime dt ON ff.TimeKey = dt.TimeKey
+    GROUP BY 
+        ddg.DepartmentGroupName, dt.FullDateAlternateKey
+    ORDER BY 
+        dt.FullDateAlternateKey;
+    """
+    monthly_expenses_data = run_query(query_monthly_expenses)
+    monthly_expenses_pivot = monthly_expenses_data.pivot(index='FullDateAlternateKey', columns='DepartmentGroupName', values='TotalAmount')
+    fig, ax = plt.subplots(figsize=(15, 10))
+    monthly_expenses_pivot.plot(kind='bar', stacked=True, colormap='viridis', ax=ax)
+    ax.set_title('Monthly Expenses by Department')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Total Amount')
+    ax.legend(title='Department')
+    st.pyplot(fig)
 
 # Streamlit Layout
 st.title('Adventure Works')
