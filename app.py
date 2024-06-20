@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import squarify
 import mplcursors
 import geopandas as gpd
+from urllib.parse import quote_plus
+import matplotlib.ticker as ticker
 
 # Mengatur tampilan matplotlib untuk Streamlit
 st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -17,14 +19,13 @@ db_host = 'kubela.id'
 db_name = 'aw'
 
 encoded_password = quote_plus(db_password)
-
-# Membuat URL koneksi menggunakan SQLAlchemy
 connection_string = f'mysql+mysqlconnector://{db_username}:{encoded_password}@{db_host}/{db_name}'
 engine = create_engine(connection_string)
 
 # Fungsi untuk menjalankan query dan mengembalikan dataframe
 def run_query(query):
-    return pd.read_sql(query, db_connection)
+    with engine.connect() as connection:
+        return pd.read_sql(query, connection)
 
 # Fungsi untuk plot Top 10 Produk Terlaris
 def plot_top_10_products():
