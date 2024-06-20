@@ -244,9 +244,151 @@ def plot_histogram_price_distribution():
     plt.xlabel('Harga Produk')
     plt.ylabel('Frekuensi')
     st.pyplot(plt)
+# Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
+def plot_customer_growth():
+    query = """
+    SELECT 
+        YEAR(c.DateFirstPurchase) AS PurchaseYear,
+        COUNT(c.CustomerKey) AS CustomerCount
+    FROM 
+        dimcustomer c
+    WHERE 
+        c.DateFirstPurchase IS NOT NULL
+    GROUP BY 
+        PurchaseYear
+    """
+    data = run_query(query)
+    plt.figure(figsize=(12, 6))
+    plt.plot(data['PurchaseYear'], data['CustomerCount'], marker='o', color='b')
+    plt.title('Pertumbuhan Jumlah Pelanggan Setiap Tahun')
+    plt.xlabel('Tahun')
+    plt.ylabel('Jumlah Pelanggan')
+    plt.grid(False)
+    st.pyplot(plt)
+
+# Plot Distribusi Pelanggan Berdasarkan Kota
+def plot_customer_distribution_city():
+    query = """
+    SELECT 
+        COUNT(c.CustomerKey) AS CustomerCount,
+        g.City,
+        g.StateProvinceName,
+        g.CountryRegionCode,
+        g.SalesTerritoryKey
+    FROM 
+        dimcustomer c
+    JOIN 
+        dimgeography g ON c.GeographyKey = g.GeographyKey
+    GROUP BY
+        g.City,
+        g.StateProvinceName,
+        g.CountryRegionCode,
+        g.SalesTerritoryKey
+    """
+    data = run_query(query)
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    merged_data = world.merge(data, how='left', left_on='name', right_on='City')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    merged_data.plot(column='CustomerCount', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
+    plt.title('Distribusi Pelanggan Berdasarkan Kota')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    st.pyplot(plt)
+
+# Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
+def plot_donut_marital_status():
+    query = "SELECT * FROM dimcustomer"
+    customer_data = run_query(query)
+    plt.figure(figsize=(8, 8))
+    customer_data['MaritalStatus'].value_counts().plot.pie(autopct='%1.1f%%', startangle=90, wedgeprops=dict(width=0.4), labels=None)
+    plt.title('Donut chart Pelanggan berdasarkan Status Pernikahan')
+    plt.legend(labels=customer_data['MaritalStatus'].value_counts().index, loc='best')
+    plt.axis('equal')
+    st.pyplot(plt)
+
+# Plot Pie Chart jumlah Pelanggan berdasarkan Pendidikan
+def plot_pie_education():
+    query = "SELECT * FROM dimcustomer"
+    customer_data = run_query(query)
+    plt.figure(figsize=(8, 8))
+    customer_data['EnglishEducation'].value_counts().plot.pie(autopct='%1.1f%%', startangle=90, wedgeprops=dict(width=1), labels=None)
+    plt.title('Pie chart jumlah Pelanggan berdasarkan Pendidikan')
+    plt.legend(labels=customer_data['EnglishEducation'].value_counts().index, loc='best')
+    plt.axis('equal')
+    st.pyplot(plt)
+
+# Plot Barchart jumlah Pelanggan berdasarkan Pekerjaan
+def plot_bar_occupation():
+    query = "SELECT * FROM dimcustomer"
+    customer_data = run_query(query)
+    plt.figure(figsize=(10, 6))
+    sns.countplot(data=customer_data, x='EnglishOccupation')
+    plt.title('Barchart jumlah Pelanggan berdasarkan Pekerjaan')
+    plt.xlabel('Pekerjaan')
+    plt.ylabel('Jumlah Pelanggan')
+    plt.xticks(rotation=45)
+    st.pyplot(plt)
+
+# Plot Distribusi Pelanggan berdasarkan Negara
+def plot_customer_distribution_country():
+    query = """
+    SELECT g.EnglishCountryRegionName as name , COUNT(c.CustomerKey) as CustomerCount
+    FROM dimcustomer c
+    JOIN dimgeography g ON c.GeographyKey = g.GeographyKey
+    GROUP BY g.EnglishCountryRegionName
+    """
+    country_data = run_query(query)
+    country_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    merged_data = country_map.merge(country_data, left_on='name', right_on='name', how='left')
+    plt.figure(figsize=(15, 10))
+    merged_data.plot(column='CustomerCount', cmap='Blues', edgecolor='0.9', legend=True)
+    for idx, row in merged_data.iterrows():
+        if not pd.isnull(row['name']) and row.geometry is not None:
+            plt.text(row.geometry.centroid.x, row.geometry.centroid.y, row['name'], fontsize=8, ha='center')
+    plt.title('Distribusi Pelanggan berdasarkan Negara')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    st.pyplot(plt)
+
+# Plot Histogram distribusi usia pelanggan
+def plot_age_distribution():
+    query_last_date = "SELECT MAX(FullDateAlternateKey) FROM dimtime"
+    last_date = run_query(query_last_date)['MAX(FullDateAlternateKey)'].iloc[0]
+    query_customer = "SELECT CustomerKey, BirthDate FROM dimcustomer"
+    customer_data = run_query(query_customer)
+    customer_data['BirthDate'] = pd.to_datetime(customer_data['BirthDate'])
+    customer_data['Age'] = (last_date - customer_data['BirthDate']).dt.days // 365
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data=customer_data, x='Age', bins=30, kde=True)
+    plt.title('Histogram distribusi usia pelanggan')
+    plt.xlabel('Usia')
+    plt.ylabel('Jumlah Pelanggan')
+    st.pyplot(plt)
+
+# Plot Scatter Plot Pendapatan Tahunan vs. Total Pembelian
+def plot_income_vs_sales():
+    query = """
+    SELECT 
+        c.YearlyIncome AS YearlyIncome,
+        SUM(sales.SalesAmount) AS TotalSalesAmount
+    FROM 
+        dimcustomer c
+    JOIN 
+        factinternetsales sales ON c.CustomerKey = sales.CustomerKey
+    GROUP BY 
+        c.YearlyIncome;
+    """
+    df = run_query(query)
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df['YearlyIncome'], df['TotalSalesAmount'], alpha=0.5)
+    plt.title('Scatter Plot Pendapatan Tahunan vs. Total Pembelian')
+    plt.xlabel('Pendapatan Tahunan')
+    plt.ylabel('Total Pembelian')
+    plt.grid(True)
+    st.pyplot(plt)
 
 # Streamlit Layout
-st.title('Analisis Penjualan')
+st.title('Adventure Works')
 
 st.sidebar.title('Adventure Works')
 option = st.sidebar.selectbox('Menu', [
@@ -265,3 +407,13 @@ if option == 'Sales Performance Overview':
     plot_sales_per_region()
     plot_scatter_price_sales()
     plot_histogram_price_distribution()
+elif option == 'Customer Analysis':
+    plot_customer_growth()
+    plot_customer_distribution_city()
+    plot_donut_marital_status()
+    plot_pie_education()
+    plot_bar_occupation()
+    plot_customer_distribution_country()
+    plot_age_distribution()
+    plot_income_vs_sales()
+elif option == 'Operational Performance Overview':
