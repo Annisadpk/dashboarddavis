@@ -4,7 +4,7 @@ pandas
 altair
 SQLAlchemy
 seaborn
-matplotlib.pyplot 
+matplotlib
 squarify
 mplcursors
 geopandas
