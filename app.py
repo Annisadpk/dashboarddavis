@@ -27,6 +27,12 @@ def run_query(query):
     with engine.connect() as connection:
         return pd.read_sql(query, connection)
 
+st.markdown(f"""
+        <div style="display: flex; justify-content: center;">
+            <img src="{"https://th.bing.com/th/id/OIP.ZnAmOzJ5QDK0iSKcUIJBLQAAAA?rs=1&pid=ImgDetMain"}" width="200">
+        </div>
+    """, unsafe_allow_html=True)
+
 # Fungsi untuk plot Top 10 Produk Terlaris
 def plot_top_10_products():
     query = """
