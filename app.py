@@ -406,6 +406,8 @@ def plot_income_vs_sales():
     plt.ylabel('Total Pembelian')
     plt.grid(True)
     st.pyplot(plt)
+
+
 #OPERATIONAL PERFORMANCE OVERVIEW
 # Pendapatan Perusahaan Berdasarkan Promosi
 def pendapatan_prusahaan_berdasarkan_promosi():
