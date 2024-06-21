@@ -282,6 +282,8 @@ def plot_customer_growth():
     plt.ylabel('Jumlah Pelanggan')
     plt.grid(False)
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan pertumbuhan pelanggan setiap tahunnya. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi '
+            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga 500 sampai 800 dollar')
 
 # Plot Distribusi Pelanggan Berdasarkan Kota
 def plot_customer_distribution_city():
@@ -598,4 +600,3 @@ elif option == 'Operational Performance Overview':
     operational_cost()
     monthly_expenses()
 
-st.caption('© 21082010090 - Annisa Dita Putri Kartika')
