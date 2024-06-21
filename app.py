@@ -538,7 +538,18 @@ def monthly_expenses():
     st.pyplot(fig)
 
 # Streamlit Layout
-st.title('Adventure Works')
+# Menambahkan CSS untuk memusatkan judul
+st.markdown("""
+    <style>
+    .centered-title {
+        text-align: center;
+        font-size: 36px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Judul aplikasi yang dipusatkan
+st.markdown('<h1 class="centered-title">Adventure Works</h1>', unsafe_allow_html=True)
 
 st.sidebar.title('Adventure Works')
 option = st.sidebar.selectbox('Menu', [
@@ -576,3 +587,4 @@ elif option == 'Operational Performance Overview':
     monthly_expenses()
     
 
+st.caption('© 21082010090 - Annisa Dita Putri Kartika')
