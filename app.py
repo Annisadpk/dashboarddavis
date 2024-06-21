@@ -596,6 +596,9 @@ elif option == 'Operational Performance Overview':
     karyawan_department()
     operational_cost()
     monthly_expenses()
-    
+
+# Mengatur tema Streamlit ke light mode
+st.set_page_config(page_title="My Streamlit App", page_icon=":chart_with_upwards_trend:", layout="wide", initial_sidebar_state="expanded", theme="light")
+
 
 st.caption('© 21082010090 - Annisa Dita Putri Kartika')
