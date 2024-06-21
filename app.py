@@ -244,6 +244,7 @@ def plot_scatter_price_sales():
             'antara harga produk dan jumlah terjual, artinya kemungkinan pelanggan tidak membeli karena harga teteapi berdasarkan kebutuhan')
 
 # Fungsi untuk plot Histogram Distribusi Harga Produk
+# Fungsi untuk plot Histogram Distribusi Harga Produk
 def plot_histogram_price_distribution():
     query = """
     SELECT 
@@ -252,14 +253,20 @@ def plot_histogram_price_distribution():
         dimproduct
     """
     data_price = run_query(query)
-    plt.figure(figsize=(10, 6))
-    sns.histplot(x='ListPrice', data=data_price, kde=True)
-    plt.title('Distribusi Harga Produk')
-    plt.xlabel('Harga Produk')
-    plt.ylabel('Frekuensi')
-    st.pyplot(plt)
-    st.write('Visualisasi tersebut menunjukkan  distribusi harga produk. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi '
-            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga 500 sampai 800 dollar')
+    
+    # Memastikan ada data yang diperoleh dari query
+    if data_price.empty:
+        st.warning('Data kosong. Tidak ada data harga produk yang tersedia.')
+    else:
+        plt.figure(figsize=(10, 6))
+        sns.histplot(x='ListPrice', data=data_price, kde=True)
+        plt.title('Distribusi Harga Produk')
+        plt.xlabel('Harga Produk')
+        plt.ylabel('Frekuensi')
+        st.pyplot(plt)
+        
+        st.write('Visualisasi tersebut menunjukkan distribusi harga produk. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi. '
+                'Namun distribusi harga terpusat atau paling banyak pada kisaran harga 500 sampai 800 dollar')
 
 #CUSTOMER ANALYSIS
 # Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
