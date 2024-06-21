@@ -60,6 +60,8 @@ def plot_top_10_products():
     plt.title("")
     plt.gca().set_frame_on(False)
     st.pyplot(plt)
+    # Menambahkan teks di bawah diagram
+    st.text("Diagram diatas merupakan 10 produk dengan order quantity yang paling banyak, dengan diagram ini Bisnis dapat mengarahkan strategi pemasaran dan pengembangan produk ke arah yang paling efektif. Dengan visualisasi ini , viewer dapat dengan jelas melihat 10 produk yang paling sering dipesan dan kategori produk mana yang mereka masuki.")
 
 # Fungsi untuk plot Penjualan Berdasarkan Kategori
 def plot_sales_by_category():
