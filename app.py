@@ -577,7 +577,6 @@ if option == 'Sales Performance Overview':
     plot_stacked_area_chart()
     plot_donut_chart()
     plot_treemap()
-    plot_sales_per_region()
     plot_scatter_price_sales()
     plot_histogram_price_distribution()
 elif option == 'Customer Analysis':
