@@ -52,14 +52,16 @@ def plot_top_10_products():
     LIMIT 10;
     """
     data = run_query(query)
-    plt.figure(figsize=(12, 8))
-    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False)
-    plt.xlabel('Nama Produk')
-    plt.ylabel('Jumlah Penjualan')
-    plt.xticks(rotation=45, ha='right')
-    plt.title("")
-    plt.gca().set_frame_on(False)
-    st.pyplot(plt)
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False, ax=ax)
+    ax.set_xlabel('Nama Produk')
+    ax.set_ylabel('Jumlah Penjualan')
+    ax.set_title("Top 10 Produk Terlaris")
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    ax.set_frame_on(False)
+    
+    st.pyplot(fig)
     # Menambahkan teks di bawah diagram
     st.write('Visualisasi tersebut menunjukkan 10 produk dengan orderquantity terbanyak. Dengan informasi ini, bisnis dapat mengarahkan strategi pemasaran'
              'dan pengembangan produk ke arah yang paling efektif.')
