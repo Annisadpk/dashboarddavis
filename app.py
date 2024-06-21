@@ -258,7 +258,7 @@ def plot_histogram_price_distribution():
     plt.ylabel('Frekuensi')
     st.pyplot(plt)
     st.write('Visualisasi tersebut menunjukkan  distribusi harga produk. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi '
-            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga $500 sampai $800.')
+            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga 500 sampai 800 dollar')
 
 #CUSTOMER ANALYSIS
 # Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
