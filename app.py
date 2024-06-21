@@ -290,8 +290,8 @@ def plot_customer_growth():
     plt.ylabel('Jumlah Pelanggan')
     plt.grid(False)
     st.pyplot(plt)
-    st.write('Visualisasi tersebut menunjukkan pertumbuhan pelanggan setiap tahunnya. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi '
-            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga 500 sampai 800 dollar')
+    st.write('Visualisasi tersebut menunjukkan pertumbuhan pelanggan setiap tahunnya. Dari visualisasi ini, viewer juga dapat mengetahui apakah customer semakin bertambah setiap tahunnya'
+            'Dan dapat dilihat pertumbuhan cutomer tertinggi adalah pada tahun 2003')
 
 # Plot Distribusi Pelanggan Berdasarkan Kota
 def plot_customer_distribution_city():
@@ -321,6 +321,7 @@ def plot_customer_distribution_city():
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
     st.pyplot(plt)
+    st.write("Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota terlihat bahwa distribusi Pelanggan merata pada tiap kota dikarenakan warna yang merata ")
 
 # Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
 def plot_donut_marital_status():
@@ -332,6 +333,7 @@ def plot_donut_marital_status():
     plt.legend(labels=customer_data['MaritalStatus'].value_counts().index, loc='best')
     plt.axis('equal')
     st.pyplot(plt)
+    st.write("Visualisasi ini menunjukkan komposisi pelanggan berdasarkan status pernikahan. Terlihat bahwa lebih banyak pelanggan berstatus sudah menikah yang melakukan pembelian di perusahaan. Hal ini bisa menjadi pertimbangan analisis perusahaan untuk memunculkan produk-produk yang mungkin sesuai dengan status pernikahan pelanggan ")
 
 # Plot Pie Chart jumlah Pelanggan berdasarkan Pendidikan
 def plot_pie_education():
@@ -355,6 +357,7 @@ def plot_bar_occupation():
     plt.ylabel('Jumlah Pelanggan')
     plt.xticks(rotation=45)
     st.pyplot(plt)
+    st.write("Visualisasi ini menunjukkan pebandingan jumlah pelanggan berdasarkan pekerjaan. Banyak Customer dengan status pekerjaan Professional. Hal ini juga bisa menjadi pertimbangan perusahaan dalam melakukan inovasi penjualan produk ")
 
 # Plot Distribusi Pelanggan berdasarkan Negara
 def plot_customer_distribution_country():
@@ -376,6 +379,7 @@ def plot_customer_distribution_country():
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
     st.pyplot(plt)
+    st.write("Visualisasi ini menunjukkan Distribusi Pelanggan Disetiap Negara, Mungkin tidak terlalu jelas tetapi dapat dilihat dinegara Australia memiliki jumlah pelanggan yang paling banyak ")
 
 # Plot Histogram distribusi usia pelanggan
 def plot_age_distribution():
@@ -391,6 +395,7 @@ def plot_age_distribution():
     plt.xlabel('Usia')
     plt.ylabel('Jumlah Pelanggan')
     st.pyplot(plt)
+    st.write("Grafik ini adalah histogram distribusi usia pelanggan. Histogram ini menunjukkan sebaran usia pelanggan di dalam dataset. Terlihat bahwa distribusi usia pelanggan paling banyak berkisar pada usia produktif yaitu usia 20 tahun sampai 50 tahun. Ini juga dapat membantu perusahaan dalam menyusun rencana bisnis selanjutnya. ")
 
 # Plot Scatter Plot Pendapatan Tahunan vs. Total Pembelian
 def plot_income_vs_sales():
@@ -413,6 +418,7 @@ def plot_income_vs_sales():
     plt.ylabel('Total Pembelian')
     plt.grid(True)
     st.pyplot(plt)
+    st.write("Visualisasi tersebut menunjukkan Relasi antara jumlah pendapatan pelanggan dengan total pembeliannya pada perusahaan. Namun dalam grafik yang dihasilkan dapat disimpulkan bahwa tidak ada hubungan antara jumlah pendapatan tahunan dan total pembelian. hal ini menunjukkan bahwa pembelian pelanggan tidak dipengaruhi jumlah pendapatannya")
 
 
 #OPERATIONAL PERFORMANCE OVERVIEW
@@ -432,6 +438,7 @@ def pendapatan_prusahaan_berdasarkan_promosi():
     ax.set_ylabel('Total Pendapatan')
     plt.xticks(rotation=45, ha='right')
     st.pyplot(fig)
+    st.write("Visualisasitersebut adalah diagram batang yang menampilkan pendapatan perusahaan berdasarkan jenis promosi. Ini dapat digunakan Untuk mengetahui jenis promosi apa yang paling berkontribusi pada pendapatan Perusahaan. Bisa dilihat bahwa dari 4 jenis promosi hanya Volume Discount 11 to 14 yang berkontrubusi pada pendapatan perusahaan dan selebihnya pendapatan perusahaan di hasilkan dari pembelian tanpa promosi")
 
 # Tren Pengeluaran Operasional Departemen
 def pengeluaran_operasional_department():
@@ -452,6 +459,7 @@ def pengeluaran_operasional_department():
     ax.legend()
     plt.xticks(rotation=45)
     st.pyplot(fig)
+    st.write("Grafik ini merupakan diagram garis yang menunjukkan tren pengeluaran operasional untuk setiap departemen dari tahun ke tahun. Grafik ini Memberikan pemahaman tentang pola pengeluaran di berbagai departemen sepanjang waktu. Membantu manajemen dalam menganalisis dan memantau tren pengeluaran departemen dari waktu ke waktu, memungkinkan mereka untuk mengidentifikasi pola pengeluaran, mengelola anggaran dengan lebih efisien, dan mengambil tindakan korektif jika diperlukan. Dapat diketahui bahwa Departemen dengan jumlah pengeluaran terbesar dari tahun ke tahun adalah Sales and Marketing")
 
 # Korelasi Antara Pengalaman Kerja dan Gaji
 def pengalaman_kerja_gaji():
@@ -471,6 +479,7 @@ def pengalaman_kerja_gaji():
     ax.set_xlabel('Pengalaman Kerja (Tahun)')
     ax.set_ylabel('Gaji')
     st.pyplot(fig)
+    st.write("Grafik ini menampilkan korelasi antara pengalaman kerja dalam tahun dan gaji karyawan. Dari grafik yang ditampilkan menunjukan bahwa tidak terdapat korelasi yang jelas antara gaji dengan pengalaman kerja karyawan. Artinya besaran gaji karyawan tidak dipengaruhi seberapa lama ia bekerja ")
 
 # Korelasi antara Harga Produk dan Biaya Produksi dengan Markup
 def harga_biaya():
@@ -491,6 +500,7 @@ def harga_biaya():
     ax.set_ylabel('Nominal (StandardCost / ListPrice)')
     ax.legend()
     st.pyplot(fig)
+    st.write("Visualisasi ini akan membantu mengevaluasi apakah ada hubungan antara harga jual produk dan biaya produksinya. Jika ada, ini dapat memberikan wawasan tentang margin keuntungan produk, serta membantu dalam pengambilan keputusan terkait penetapan harga. Markup adalah keuntungan minimal atau harga pasaran yang seharusnya diterapkan yaitu 20% dari biaya produksi. Pada Adventure Works semua produk dijual dengan harga diatas markup. Ini juga dapat mendefinisikan bahwa perusahaan memiliki keuntungan yang besar dari beberapa produk. ")
 
 # Distribusi Karyawan pada Departemen
 def karyawan_department():
@@ -510,6 +520,7 @@ def karyawan_department():
     ax.set_xlabel('Jumlah Karyawan')
     ax.set_ylabel('Nama Departemen')
     st.pyplot(fig)
+    st.write("Visualisasi ini menunjukkan Distribusi Karyawan pada setiap department. Visualisasi ini dapat membantu menganalisis department apa saja yang memiliki jumlah karyawan terbanyak. Dan dihasilkan Department dengan Karyawan terbanyak yaitu Production")
 
 # Operational Costs by Department (TreeMap)
 def operational_cost():
@@ -531,6 +542,7 @@ def operational_cost():
     squarify.plot(sizes=operational_costs_data['TotalAmount'], label=labels, alpha=.8, color=sns.color_palette('viridis', len(operational_costs_data)), text_kwargs={'fontsize': 7}, ax=ax)
     ax.axis('off')
     st.pyplot(fig)
+    st.write("Visualisasi ini menunjukkan komposisi pengeluaran perushaan pada tiap department. Dari Visualisasi ini dapat diketahui department apa saja yang paling banyak pengeluarannya. Dari Grafik yang dihasilkan Department Sales and Marketinglah yang paling banyak pengeluarnya")
 
 # Monthly Expenses by Department
 def monthly_expenses():
@@ -559,6 +571,7 @@ def monthly_expenses():
     ax.set_ylabel('Total Amount')
     ax.legend(title='Department')
     st.pyplot(fig)
+    st.write("Visualisasi ini menunjukkan komposisi pengeluaran tiap department setiap bulannya. Ini dapat membantu perusahaan menganalisi atau mentracking keuangan atau pengeluaran perusahaan. Masih sama Department sales and Marketing adalah yang memiliki pengeluaran terbesar setiap bulannya ini selaras jika department Sales and Marketing memiliki jumlah pengeluaran terbanya di Perusahaan")
 
 # Streamlit Layout
 st.markdown("""
