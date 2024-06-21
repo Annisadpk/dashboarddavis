@@ -89,7 +89,7 @@ def plot_sales_by_category():
     plt.xlabel('Total Penjualan')
     plt.ylabel('Kategori Produk')
     st.pyplot(plt)
-     st.write('Visualisasi tersebut menunjukkan  perbandingan penjualan berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
+    st.write('Visualisasi tersebut menunjukkan  perbandingan penjualan berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
             'yang memberikan kontribusi terbesar terhadap total penjualan. dan dapat dilihat bahwa yang berkontri terbesar adalah Accessories dilanjut Bikes dan yang terakhir Clothing.')
 
 
