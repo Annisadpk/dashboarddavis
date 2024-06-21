@@ -54,10 +54,11 @@ def plot_top_10_products():
     data = run_query(query)
     plt.figure(figsize=(12, 8))
     sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False)
-    plt.title("Top 10 Produk Terlaris")
     plt.xlabel('Nama Produk')
     plt.ylabel('Jumlah Penjualan')
     plt.xticks(rotation=45, ha='right')
+    plt.title("")
+    plt.gca().set_frame_on(False)
     st.pyplot(plt)
 
 # Fungsi untuk plot Penjualan Berdasarkan Kategori
