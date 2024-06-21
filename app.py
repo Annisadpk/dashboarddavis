@@ -608,6 +608,8 @@ elif option == 'Operational Performance Overview':
     operational_cost()
     monthly_expenses()
 
+
+st.caption('© 2024 Adventure Works. 21082010090- Annisa Dita Putri Kartika.')
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.write("© 2024 Adventure Works. 21082010090- Annisa Dita Putri Kartika.")
