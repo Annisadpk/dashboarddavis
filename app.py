@@ -53,7 +53,7 @@ def plot_top_10_products():
     """
     data = run_query(query)
     plt.figure(figsize=(12, 8))
-    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False, transparent=True)
+    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False,)
     plt.xlabel('Nama Produk')
     plt.ylabel('Jumlah Penjualan')
     plt.xticks(rotation=45, ha='right')
@@ -79,7 +79,7 @@ def plot_sales_by_category():
         pc.EnglishProductCategoryName
     """
     data = run_query(query)
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(10, 8),facecolor='none')
     plt.barh(data['EnglishProductCategoryName'], data['TotalSales'], color=plt.cm.tab20.colors)
     plt.title("Perbandingan Penjualan Produk Berdasarkan Kategori")
     plt.xlabel('Total Penjualan')
