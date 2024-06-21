@@ -53,7 +53,7 @@ def plot_top_10_products():
     """
     data = run_query(query)
     plt.figure(figsize=(12, 8))
-    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False,)
+    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False)
     plt.xlabel('Nama Produk')
     plt.ylabel('Jumlah Penjualan')
     plt.xticks(rotation=45, ha='right')
@@ -61,10 +61,9 @@ def plot_top_10_products():
     plt.gca().set_frame_on(False)
     st.pyplot(plt)
     # Menambahkan teks di bawah diagram
-    st.write('Visualisasi tersebut menunjukkan  10 produk dengan orderquantity terbanyak. Dengan informasi ini, bisnis dapat mengarahkan strategi pemasaran'
-            'dan pengembangan produk ke arah yang paling efektif.')
-
-
+    st.write('Visualisasi tersebut menunjukkan 10 produk dengan orderquantity terbanyak. Dengan informasi ini, bisnis dapat mengarahkan strategi pemasaran'
+             'dan pengembangan produk ke arah yang paling efektif.')
+    
 # Fungsi untuk plot Penjualan Berdasarkan Kategori
 def plot_sales_by_category():
     query = """
@@ -600,3 +599,4 @@ elif option == 'Operational Performance Overview':
     operational_cost()
     monthly_expenses()
 
+st.set_page_config(page_title="Adventure Works", page_icon=":chart_with_upwards_trend:")
