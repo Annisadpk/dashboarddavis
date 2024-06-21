@@ -36,6 +36,7 @@ st.markdown(f"""
 #SALES PERFORMANCE OVERVIEW
 # Fungsi untuk plot Top 10 Produk Terlaris
 def plot_top_10_products():
+    st.header('Top 10 Product')
     query = """
     SELECT 
         p.ProductKey,
@@ -68,6 +69,7 @@ def plot_top_10_products():
     
 # Fungsi untuk plot Penjualan Berdasarkan Kategori
 def plot_sales_by_category():
+    st.header('Sales by Category')
     query = """
     SELECT 
         pc.EnglishProductCategoryName,
@@ -96,6 +98,7 @@ def plot_sales_by_category():
 
 # Fungsi untuk plot Pendapatan Perusahaan Pertahun
 def plot_revenue_per_year():
+    st.header('Pendapatan Perusahaan Pertahun')
     query = """
     SELECT 
         t.CalendarYear,
@@ -122,6 +125,7 @@ def plot_revenue_per_year():
 
 # Fungsi untuk plot Stacked Area Chart Pendapatan Per Kategori
 def plot_stacked_area_chart():
+    st.header('Pendapatan Per Kategori Produk')
     query = """
     SELECT 
         t.CalendarYear,
@@ -160,6 +164,7 @@ def plot_stacked_area_chart():
 
 # Fungsi untuk plot Donut Chart Penjualan Per Kategori
 def plot_donut_chart():
+    st.header('Penjualan berdasarkan Kategori Produk')
     query = """
     SELECT 
         pc.EnglishProductCategoryName,
@@ -191,6 +196,7 @@ def plot_donut_chart():
 
 # Fungsi untuk plot TreeMap Komposisi Produk
 def plot_treemap():
+    st.header('Komposisi Produk Terjual tiap Kategori')
     query = """
     SELECT 
         pc.EnglishProductCategoryName AS Category,
@@ -222,6 +228,7 @@ def plot_treemap():
 
 # Fungsi untuk plot Scatter Hubungan Antara Harga Produk dan Jumlah Terjual
 def plot_scatter_price_sales():
+    st.header('Hubungan Antara Harga Produk dan Jumlah Terjual')
     query = """
     SELECT 
         p.ListPrice AS ProductPrice,
@@ -246,6 +253,7 @@ def plot_scatter_price_sales():
 # Fungsi untuk plot Histogram Distribusi Harga Produk
 # Fungsi untuk plot Histogram Distribusi Harga Produk
 def plot_histogram_price_distribution():
+    st.header('Histogram Distribusi Harga Produk')
     query = """
     SELECT 
         ListPrice
@@ -271,6 +279,7 @@ def plot_histogram_price_distribution():
 #CUSTOMER ANALYSIS
 # Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
 def plot_customer_growth():
+    st.header('Pertumbuhan Jumlah Pelanggan Setiap Tahun')
     query = """
     SELECT 
         YEAR(c.DateFirstPurchase) AS PurchaseYear,
@@ -295,6 +304,7 @@ def plot_customer_growth():
 
 # Plot Distribusi Pelanggan Berdasarkan Kota
 def plot_customer_distribution_city():
+    st.header('Distribusi Pelanggan Berdasarkan Kota')
     query = """
     SELECT 
         COUNT(c.CustomerKey) AS CustomerCount,
@@ -325,6 +335,7 @@ def plot_customer_distribution_city():
 
 # Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
 def plot_donut_marital_status():
+    st.header('Komposisi Pelanggan berdasarkan Status Pernikahan')
     query = "SELECT * FROM dimcustomer"
     customer_data = run_query(query)
     plt.figure(figsize=(8, 8))
@@ -337,6 +348,7 @@ def plot_donut_marital_status():
 
 # Plot Pie Chart jumlah Pelanggan berdasarkan Pendidikan
 def plot_pie_education():
+    st.header('Komposisi Pelanggan berdasarkan Pendidikan')
     query = "SELECT * FROM dimcustomer"
     customer_data = run_query(query)
     plt.figure(figsize=(8, 8))
@@ -345,9 +357,11 @@ def plot_pie_education():
     plt.legend(labels=customer_data['EnglishEducation'].value_counts().index, loc='best')
     plt.axis('equal')
     st.pyplot(plt)
+    st.write("Visualisasi ini menunjukkan pebandingan jumlah pelanggan berdasarkan pendidikan. Banyak Customer dengan pendidikan Bachelors. Hal ini juga bisa menjadi pertimbangan perusahaan dalam melakukan inovasi penjualan produk ")
 
 # Plot Barchart jumlah Pelanggan berdasarkan Pekerjaan
 def plot_bar_occupation():
+    st.header('Perbandingan Jumlah Pelanggan berdasarkan Pekerjaan')
     query = "SELECT * FROM dimcustomer"
     customer_data = run_query(query)
     plt.figure(figsize=(10, 6))
@@ -361,6 +375,7 @@ def plot_bar_occupation():
 
 # Plot Distribusi Pelanggan berdasarkan Negara
 def plot_customer_distribution_country():
+    st.header('Distribusi Pelanggan berdasarkan Negara')
     query = """
     SELECT g.EnglishCountryRegionName as name , COUNT(c.CustomerKey) as CustomerCount
     FROM dimcustomer c
@@ -383,6 +398,7 @@ def plot_customer_distribution_country():
 
 # Plot Histogram distribusi usia pelanggan
 def plot_age_distribution():
+    st.header('Distribusi Usia Pelanggan')
     query_last_date = "SELECT MAX(FullDateAlternateKey) FROM dimtime"
     last_date = run_query(query_last_date)['MAX(FullDateAlternateKey)'].iloc[0]
     query_customer = "SELECT CustomerKey, BirthDate FROM dimcustomer"
@@ -399,6 +415,7 @@ def plot_age_distribution():
 
 # Plot Scatter Plot Pendapatan Tahunan vs. Total Pembelian
 def plot_income_vs_sales():
+    st.header(' Pendapatan Tahunan vs. Total Pembelian')
     query = """
     SELECT 
         c.YearlyIncome AS YearlyIncome,
