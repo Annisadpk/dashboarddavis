@@ -1,4 +1,4 @@
-import streamlit as st
+zzzimport streamlit as st
 from sqlalchemy import create_engine
 import pandas as pd
 import seaborn as sns
@@ -586,7 +586,6 @@ elif option == 'Customer Analysis':
     plot_donut_marital_status()
     plot_pie_education()
     plot_bar_occupation()
-    plot_customer_distribution_country()
     plot_age_distribution()
     plot_income_vs_sales()
 elif option == 'Operational Performance Overview':
