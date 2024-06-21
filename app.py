@@ -613,7 +613,6 @@ elif option == 'Customer Analysis':
     plot_income_vs_sales()
 elif option == 'Operational Performance Overview':
     st.header("Operational Performance Overview")
-    plot_income_vs_sales()
     pengeluaran_operasional_department()
     pengalaman_kerja_gaji()
     harga_biaya()
