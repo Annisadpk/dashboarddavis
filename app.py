@@ -154,6 +154,8 @@ def plot_stacked_area_chart():
     plt.grid(False)
     plt.legend(title='Kategori Produk', loc='upper left')
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan  komposisi pendapatan perusahaan berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
+            'yang memberikan kontribusi terbesar terhadap pendapatan perusahaan. dan dapat dilihat bahwa yang berkontri terbesar adalah Clothing.')
 
 # Fungsi untuk plot Donut Chart Penjualan Per Kategori
 def plot_donut_chart():
@@ -183,6 +185,8 @@ def plot_donut_chart():
     plt.title("Komposisi Jumlah Penjualan Unit Produk Tiap Kategori")
     plt.axis('equal')
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan  komposisi jumlah unit terjual dari produk berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
+            'yang yang banyak terjual. dan dapat dilihat bahwa yang berkontri terbesar adalah Accessories.')
 
 # Fungsi untuk plot TreeMap Komposisi Produk
 def plot_treemap():
@@ -211,19 +215,9 @@ def plot_treemap():
     plt.title("TreeMap Komposisi Produk yang Terjual Berdasarkan Kategori Produk")
     plt.axis('off')
     st.pyplot(plt)
+    st.write('Sama dengan donut Chart diatas, Visualisasi tersebut menunjukkan  komposisi jumlah unit terjual dari produk berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
+            'yang yang banyak terjual. dan dapat dilihat bahwa yang berkontri terbesar adalah Accessories.')
 
-# Fungsi untuk plot Komposisi Penjualan Berdasarkan Wilayah Penjualan
-def plot_sales_per_region():
-    sales_data = run_query("SELECT * FROM factinternetsales")
-    territory_data = run_query("SELECT * FROM dimsalesterritory")
-    merged_data = pd.merge(sales_data, territory_data, on="SalesTerritoryKey")
-    total_sales_per_region = merged_data.groupby(["SalesTerritoryRegion"]).agg({"SalesAmount": "sum"}).reset_index()
-    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-    world = world.merge(total_sales_per_region, how="left", left_on="name", right_on="SalesTerritoryRegion")
-    fig, ax = plt.subplots(1, 1, figsize=(15, 10))
-    world.plot(column="SalesAmount", ax=ax, legend=True, cmap="Oranges", edgecolor="grey", linewidth=0.5)
-    ax.set_title("Komposisi Penjualan Berdasarkan Wilayah Penjualan")
-    st.pyplot(fig)
 
 # Fungsi untuk plot Scatter Hubungan Antara Harga Produk dan Jumlah Terjual
 def plot_scatter_price_sales():
@@ -245,6 +239,8 @@ def plot_scatter_price_sales():
     plt.xlabel('Harga Produk')
     plt.ylabel('Jumlah Terjual')
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan Hubungan antara harga dan jumlah terjual produk. Dari visualisasi ini, dapat diketahui bahwa tidak ada hubungan jelas '
+            'antara harga produk dan jumlah terjual, artinya kemungkinan pelanggan tidak membeli karena harga teteapi berdasarkan kebutuhan')
 
 # Fungsi untuk plot Histogram Distribusi Harga Produk
 def plot_histogram_price_distribution():
@@ -261,6 +257,8 @@ def plot_histogram_price_distribution():
     plt.xlabel('Harga Produk')
     plt.ylabel('Frekuensi')
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan  distribusi harga produk. Dari visualisasi ini, viewer juga dapat mengetahui bahwa harga produk bervariasi '
+            'Namun distribusi harga terpusat atau paling banyak pada kisaran harga $500 sampai $800.')
 
 #CUSTOMER ANALYSIS
 # Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
