@@ -598,7 +598,8 @@ elif option == 'Operational Performance Overview':
     karyawan_department()
     operational_cost()
     monthly_expenses()
-    
+
+st.set_page_config(page_title="My Streamlit App", page_icon=":chart_with_upwards_trend:", layout="wide", initial_sidebar_state="expanded", theme="light")
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.write("© 2024 Adventure Works. 21082010090- Annisa Dita Putri Kartika.")
