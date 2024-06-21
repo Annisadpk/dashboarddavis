@@ -89,6 +89,9 @@ def plot_sales_by_category():
     plt.xlabel('Total Penjualan')
     plt.ylabel('Kategori Produk')
     st.pyplot(plt)
+     st.write('Visualisasi tersebut menunjukkan  perbandingan penjualan berdasarkan kategori produk. Dari visualisasi ini, viewer juga dapat mengetahui kategori produk apa saja '
+            'yang memberikan kontribusi terbesar terhadap total penjualan. dan dapat dilihat bahwa yang berkontri terbesar adalah Accessories dilanjut Bikes dan yang terakhir Clothing.')
+
 
 # Fungsi untuk plot Pendapatan Perusahaan Pertahun
 def plot_revenue_per_year():
@@ -113,6 +116,8 @@ def plot_revenue_per_year():
     plt.ylabel('Pendapatan Total')
     plt.gca().yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
     st.pyplot(plt)
+    st.write('Visualisasi tersebut menunjukkan pendapatan perusahaan tiap tahunnya. Ini membantu dalam menganalisis pola penjualan dari waktu ke waktu dan '
+            'mengidentifikasi tren penjualan yang mungkin ada dan juga dapat merencanakan strategi pemasaran, produksi, dan persediaan untuk mengantisipasi fluktuasi permintaan pelanggan.')
 
 # Fungsi untuk plot Stacked Area Chart Pendapatan Per Kategori
 def plot_stacked_area_chart():
