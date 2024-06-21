@@ -591,12 +591,11 @@ elif option == 'Customer Analysis':
     plot_income_vs_sales()
 elif option == 'Operational Performance Overview':
     st.header("Operational Performance Overview")
-    pendapatan_prusahaan_berdasarkan_promosi()
+    plot_income_vs_sales()
     pengeluaran_operasional_department()
     pengalaman_kerja_gaji()
     harga_biaya()
     karyawan_department()
     operational_cost()
     monthly_expenses()
-
-st.set_page_config(page_title="Adventure Works", page_icon=":chart_with_upwards_trend:")
+    
