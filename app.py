@@ -33,6 +33,7 @@ st.markdown(f"""
         </div>
     """, unsafe_allow_html=True)
 
+#SALES PERFORMANCE OVERVIEW
 # Fungsi untuk plot Top 10 Produk Terlaris
 def plot_top_10_products():
     query = """
@@ -250,6 +251,8 @@ def plot_histogram_price_distribution():
     plt.xlabel('Harga Produk')
     plt.ylabel('Frekuensi')
     st.pyplot(plt)
+
+#CUSTOMER ANALYSIS
 # Plot Pertumbuhan Jumlah Pelanggan Setiap Tahun
 def plot_customer_growth():
     query = """
@@ -392,7 +395,7 @@ def plot_income_vs_sales():
     plt.ylabel('Total Pembelian')
     plt.grid(True)
     st.pyplot(plt)
-
+#OPERATIONAL PERFORMANCE OVERVIEW
 # Pendapatan Perusahaan Berdasarkan Promosi
 def pendapatan_prusahaan_berdasarkan_promosi():
     st.header('Pendapatan Perusahaan Berdasarkan Promosi')
@@ -559,6 +562,7 @@ option = st.sidebar.selectbox('Menu', [
 ])
 
 if option == 'Sales Performance Overview':
+    st.header("Sales Perfomance Overview")
     plot_top_10_products()
     plot_sales_by_category()
     plot_revenue_per_year()
@@ -569,6 +573,7 @@ if option == 'Sales Performance Overview':
     plot_scatter_price_sales()
     plot_histogram_price_distribution()
 elif option == 'Customer Analysis':
+    st.header("Customer Analysis")
     plot_customer_growth()
     plot_customer_distribution_city()
     plot_donut_marital_status()
@@ -578,6 +583,7 @@ elif option == 'Customer Analysis':
     plot_age_distribution()
     plot_income_vs_sales()
 elif option == 'Operational Performance Overview':
+    st.header("Operational Performance Overview")
     pendapatan_prusahaan_berdasarkan_promosi()
     pengeluaran_operasional_department()
     pengalaman_kerja_gaji()
