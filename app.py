@@ -598,6 +598,4 @@ elif option == 'Operational Performance Overview':
     operational_cost()
     monthly_expenses()
 
-
-
 st.caption('© 21082010090 - Annisa Dita Putri Kartika')
