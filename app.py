@@ -54,11 +54,10 @@ def plot_top_10_products():
     data = run_query(query)
     
     fig, ax = plt.subplots(figsize=(12, 8))
-    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, hue='x', palette='pastel', dodge=False, ax=ax, legend=False)
+    sns.barplot(x='EnglishProductName', y='TotalSales', data=data, palette='pastel', dodge=False, ax=ax)
     ax.set_xlabel('Nama Produk')
     ax.set_ylabel('Jumlah Penjualan')
     ax.set_title("Top 10 Produk Terlaris")
-    ax.set_xticks(ax.get_xticks())
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
     ax.set_frame_on(False)
     
@@ -602,7 +601,7 @@ elif option == 'Operational Performance Overview':
     operational_cost()
     monthly_expenses()
 
-
+st.set_page_config(page_title="My Streamlit App", page_icon=":chart_with_upwards_trend:", layout="wide", initial_sidebar_state="expanded")
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.write("© 2024 Adventure Works. 21082010090- Annisa Dita Putri Kartika.")
