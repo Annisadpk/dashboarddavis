@@ -9,8 +9,7 @@ import geopandas as gpd
 from urllib.parse import quote_plus
 import matplotlib.ticker as ticker
 
-# Streamlit configuration
-st.set_option('deprecation.showfileUploaderEncoding', False)
+
 
 # Konfigurasi koneksi untuk SQLAlchemy
 db_username = 'davis2024irwan'
