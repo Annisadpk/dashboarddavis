@@ -328,6 +328,11 @@ def plot_customer_distribution_city():
     world = gpd.read_file(
     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson")
      # merge, ganti 'name' jadi 'admin'
+    st.write("Kolom world:", world.columns)
+st.write(world.head(3))
+
+st.write("Kolom data:", data.columns)
+st.write(data.head(3))
     merged_data = world.merge(data, how='left', left_on='admin', right_on='City')
     
     fig, ax = plt.subplots(figsize=(10, 6))
