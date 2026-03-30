@@ -305,12 +305,8 @@ def plot_customer_growth():
             'Dan dapat dilihat pertumbuhan cutomer tertinggi adalah pada tahun 2003')
 
 # Plot Distribusi Pelanggan Berdasarkan Kota
-import streamlit as st
-import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
 
-def plot_customer_distribution_country():
+def plot_customer_distribution_city():
     st.header('Distribusi Pelanggan Berdasarkan Negara')
 
     # Query (AGREGASI NEGARA - FIX)
