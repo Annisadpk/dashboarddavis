@@ -13,11 +13,13 @@ import matplotlib.ticker as ticker
 db_username = st.secrets["DB_USERNAME"]
 db_password = st.secrets["DB_PASSWORD"]
 db_host = st.secrets["DB_HOST"]
+db_port = st.secrets["DB_PORT"]
 db_name = st.secrets["DB_NAME"]
 
 encoded_password = quote_plus(db_password)
 
-connection_string = f"mysql+mysqlconnector://{db_username}:{encoded_password}@{db_host}/{db_name}"
+connection_string = f"mysql+mysqlconnector://{db_username}:{encoded_password}@{db_host}:{db_port}/{db_name}"
+
 engine = create_engine(connection_string)
 
 # Fungsi untuk menjalankan query dan mengembalikan dataframe
