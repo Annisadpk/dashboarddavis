@@ -307,6 +307,7 @@ def plot_customer_growth():
 # Plot Distribusi Pelanggan Berdasarkan Kota
 def plot_customer_distribution_city():
     st.header('Distribusi Pelanggan Berdasarkan Kota')
+    
     query = """
     SELECT 
         COUNT(c.CustomerKey) AS CustomerCount,
@@ -324,26 +325,46 @@ def plot_customer_distribution_city():
         g.CountryRegionCode,
         g.SalesTerritoryKey
     """
+    
+    # Ambil data dari database
     data = run_query(query) 
+    
+    # Ambil shapefile world map (GeoJSON)
     world = gpd.read_file(
-    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson")
-     # merge, ganti 'name' jadi 'admin'
+        "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
+    )
+    
+    # Debugging: cek kolom dan data
     st.write("Kolom world:", world.columns)
-st.write(world.head(3))
-
-st.write("Kolom data:", data.columns)
-st.write(data.head(3))
+    st.write(world.head(3))
+    
+    st.write("Kolom data:", data.columns)
+    st.write(data.head(3))
+    
+    # Merge data dengan shapefile
     merged_data = world.merge(data, how='left', left_on='admin', right_on='City')
     
+    # Plot peta
     fig, ax = plt.subplots(figsize=(10, 6))
-    merged_data.plot(column='CustomerCount', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
+    merged_data.plot(
+        column='CustomerCount',
+        cmap='Blues',
+        linewidth=0.8,
+        ax=ax,
+        edgecolor='0.8',
+        legend=True
+    )
     
-    plt.title('Distribusi Pelanggan Berdasarkan Kota') 
-    plt.xlabel('Longitude') 
-    plt.ylabel('Latitude') 
-    st.pyplot(plt) 
-    st.write("Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota terlihat bahwa distribusi Pelanggan merata pada tiap kota dikarenakan warna yang merata ")
-
+    plt.title('Distribusi Pelanggan Berdasarkan Kota')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    
+    st.pyplot(fig)
+    
+    st.write(
+        "Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota. "
+        "Warna yang merata menunjukkan distribusi pelanggan relatif merata di tiap kota."
+    )
 # Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
 def plot_donut_marital_status():
     st.header('Komposisi Pelanggan berdasarkan Status Pernikahan')
