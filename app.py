@@ -332,9 +332,7 @@ def plot_customer_distribution_city():
         "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
     )
 
-    # DEBUG (boleh dihapus nanti)
-    st.write("Kolom world:", world.columns)
-    st.write("Kolom data:", data.columns)
+    
 
     # MERGE YANG BENAR (kode negara)
     merged_data = world.merge(
