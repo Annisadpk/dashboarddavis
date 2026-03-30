@@ -305,47 +305,54 @@ def plot_customer_growth():
             'Dan dapat dilihat pertumbuhan cutomer tertinggi adalah pada tahun 2003')
 
 # Plot Distribusi Pelanggan Berdasarkan Kota
-def plot_customer_distribution_city():
-    st.header('Distribusi Pelanggan Berdasarkan Kota')
-    
+import streamlit as st
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+def plot_customer_distribution_country():
+    st.header('Distribusi Pelanggan Berdasarkan Negara')
+
+    # Query (AGREGASI NEGARA - FIX)
     query = """
     SELECT 
         COUNT(c.CustomerKey) AS CustomerCount,
-        g.City,
-        g.StateProvinceName,
-        g.CountryRegionCode,
-        g.SalesTerritoryKey
-    FROM 
-        dimcustomer c
-    JOIN 
-        dimgeography g ON c.GeographyKey = g.GeographyKey
-    GROUP BY
-        g.City,
-        g.StateProvinceName,
-        g.CountryRegionCode,
-        g.SalesTerritoryKey
+        g.CountryRegionCode
+    FROM dimcustomer c
+    JOIN dimgeography g 
+        ON c.GeographyKey = g.GeographyKey
+    GROUP BY g.CountryRegionCode
     """
-    
-    # Ambil data dari database
-    data = run_query(query) 
-    
-    # Ambil shapefile world map (GeoJSON)
+
+    # Ambil data
+    data = run_query(query)
+
+    # Pastikan dataframe
+    data = pd.DataFrame(data)
+
+    # Ambil peta dunia
     world = gpd.read_file(
         "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
     )
-    
-    # Debugging: cek kolom dan data
+
+    # DEBUG (boleh dihapus nanti)
     st.write("Kolom world:", world.columns)
-    st.write(world.head(3))
-    
     st.write("Kolom data:", data.columns)
-    st.write(data.head(3))
-    
-    # Merge data dengan shapefile
-    merged_data = world.merge(data, how='left', left_on='admin', right_on='City')
-    
-    # Plot peta
-    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # MERGE YANG BENAR (kode negara)
+    merged_data = world.merge(
+        data,
+        how='left',
+        left_on='ISO_A2',
+        right_on='CountryRegionCode'
+    )
+
+    # Isi NaN jadi 0 biar aman
+    merged_data['CustomerCount'] = merged_data['CustomerCount'].fillna(0)
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 7))
+
     merged_data.plot(
         column='CustomerCount',
         cmap='Blues',
@@ -354,16 +361,16 @@ def plot_customer_distribution_city():
         edgecolor='0.8',
         legend=True
     )
-    
-    plt.title('Distribusi Pelanggan Berdasarkan Kota')
-    plt.xlabel('Longitude')
-    plt.ylabel('Latitude')
-    
+
+    plt.title('Distribusi Pelanggan Berdasarkan Negara')
+    plt.axis('off')
+
     st.pyplot(fig)
-    
+
+    # Insight
     st.write(
-        "Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota. "
-        "Warna yang merata menunjukkan distribusi pelanggan relatif merata di tiap kota."
+        "Visualisasi menunjukkan distribusi pelanggan berdasarkan negara. "
+        "Semakin gelap warna, semakin banyak jumlah pelanggan di negara tersebut."
     )
 # Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
 def plot_donut_marital_status():
