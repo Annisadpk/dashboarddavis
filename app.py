@@ -322,16 +322,37 @@ def plot_customer_distribution_city():
         g.CountryRegionCode,
         g.SalesTerritoryKey
     """
-    data = run_query(query)
-    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-    merged_data = world.merge(data, how='left', left_on='name', right_on='City')
-    fig, ax = plt.subplots(figsize=(10, 6))
-    merged_data.plot(column='CustomerCount', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
-    plt.title('Distribusi Pelanggan Berdasarkan Kota')
-    plt.xlabel('Longitude')
-    plt.ylabel('Latitude')
-    st.pyplot(plt)
-    st.write("Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota terlihat bahwa distribusi Pelanggan merata pada tiap kota dikarenakan warna yang merata ")
+    data = run_query(query)  # pastikan ini menghasilkan DataFrame dengan kolom 'City' & 'CustomerCount'
+
+# ambil shapefile world map dari URL
+world = gpd.read_file(
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
+)
+
+# gabungkan data pelanggan dengan shapefile world
+merged_data = world.merge(data, how='left', left_on='name', right_on='City')
+
+# plot
+fig, ax = plt.subplots(figsize=(10, 6))
+merged_data.plot(
+    column='CustomerCount',
+    cmap='Blues',
+    linewidth=0.8,
+    ax=ax,
+    edgecolor='0.8',
+    legend=True
+)
+
+plt.title('Distribusi Pelanggan Berdasarkan Kota')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+
+# tampilkan di Streamlit
+st.pyplot(fig)
+
+st.write(
+    "Visualisasi tersebut menunjukkan Distribusi Pelanggan berdasarkan kota. Warna yang merata menunjukkan distribusi pelanggan relatif merata di tiap kota."
+)
 
 # Plot Donut Chart Pelanggan berdasarkan Status Pernikahan
 def plot_donut_marital_status():
