@@ -304,51 +304,62 @@ def plot_customer_growth():
     st.write('Visualisasi tersebut menunjukkan pertumbuhan pelanggan setiap tahunnya. Dari visualisasi ini, viewer juga dapat mengetahui apakah customer semakin bertambah setiap tahunnya'
             'Dan dapat dilihat pertumbuhan cutomer tertinggi adalah pada tahun 2003')
 
-# Plot Distribusi Pelanggan Berdasarkan Kota
+# Plot Distribusi Pelanggan Berdasarkan Negara
+
 
 def plot_customer_distribution_city():
-    st.header('Distribusi Pelanggan Berdasarkan Kota')
+    st.header('Distribusi Pelanggan Berdasarkan Negara')
 
+    # Query (AGREGASI NEGARA - FIX)
     query = """
     SELECT 
         COUNT(c.CustomerKey) AS CustomerCount,
-        g.City,
-        g.Latitude,
-        g.Longitude
+        g.CountryRegionCode
     FROM dimcustomer c
     JOIN dimgeography g 
         ON c.GeographyKey = g.GeographyKey
-    WHERE g.Latitude IS NOT NULL
-      AND g.Longitude IS NOT NULL
-    GROUP BY g.City, g.Latitude, g.Longitude
+    GROUP BY g.CountryRegionCode
     """
 
-    data = pd.DataFrame(run_query(query))
+    # Ambil data
+    data = run_query(query)
 
-    # Convert ke GeoDataFrame
-    gdf = gpd.GeoDataFrame(
-        data,
-        geometry=gpd.points_from_xy(data.Longitude, data.Latitude)
-    )
+    # Pastikan dataframe
+    data = pd.DataFrame(data)
 
     # Ambil peta dunia
     world = gpd.read_file(
         "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
     )
 
+    # DEBUG (boleh dihapus nanti)
+    st.write("Kolom world:", world.columns)
+    st.write("Kolom data:", data.columns)
+
+    # MERGE YANG BENAR (kode negara)
+    merged_data = world.merge(
+        data,
+        how='left',
+        left_on='ISO_A2',
+        right_on='CountryRegionCode'
+    )
+
+    # Isi NaN jadi 0 biar aman
+    merged_data['CustomerCount'] = merged_data['CustomerCount'].fillna(0)
+
     # Plot
     fig, ax = plt.subplots(figsize=(12, 7))
 
-    world.plot(ax=ax, color='lightgrey')
-
-    gdf.plot(
+    merged_data.plot(
+        column='CustomerCount',
+        cmap='Blues',
+        linewidth=0.8,
         ax=ax,
-        markersize=gdf['CustomerCount'] * 0.5,
-        color='red',
-        alpha=0.6
+        edgecolor='0.8',
+        legend=True
     )
 
-    plt.title('Distribusi Pelanggan Berdasarkan Kota')
+    plt.title('Distribusi Pelanggan Berdasarkan Negara')
     plt.axis('off')
 
     st.pyplot(fig)
