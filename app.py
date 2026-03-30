@@ -325,7 +325,8 @@ def plot_customer_distribution_city():
         g.SalesTerritoryKey
     """
     data = run_query(query) 
-    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres')) 
+    world = gpd.read_file(
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson")
     merged_data = world.merge(data, how='left', left_on='name', right_on='City') 
     fig, ax = plt.subplots(figsize=(10, 6)) 
     merged_data.plot(column='CustomerCount', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True) 
